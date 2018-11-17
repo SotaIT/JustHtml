@@ -1,0 +1,41 @@
+﻿@model Nop.Plugin.Widgets.JustHtml.Models.ConfigurationModel
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+@await Component.InvokeAsync("StoreScopeConfiguration")
+
+<form asp-controller="JustHtmlWidget" asp-action="Configure" method="post">
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @T("Admin.JustHtml.Instructions")
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="WidgetSeparator_OverrideForStore" asp-input="WidgetSeparator" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="WidgetSeparator" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="WidgetSeparator" />
+                        <span asp-validation-for="WidgetSeparator"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-9">
+                        <input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+       @await Html.PartialAsync("List.cshtml", Model)
+            
+    </div>
+</form>

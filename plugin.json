@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Widgets",
+  "FriendlyName": "JustHtml",
+  "SystemName": "Widgets.JustHtml",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.10" ],
+  "Author": "sotait.net",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.JustHtml.dll",
+  "Description": "Place your HTML code in any widget area"
+}

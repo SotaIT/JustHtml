@@ -1,0 +1,88 @@
+﻿@model Nop.Plugin.Widgets.JustHtml.Models.ConfigurationModel
+
+<div class="panel panel-default advanced-setting">
+    <div class="panel-heading">
+        @T("Admin.JustHtml.Widgets")
+    </div>
+    <div class="panel-body">
+        <p>
+            <em>@T("Admin.JustHtml.Widgets.Description")</em>
+        </p>
+        <div id="justhtmlwidgets-grid"></div>
+
+        <script>
+                $(document).ready(function () {
+                    $("#justhtmlwidgets-grid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("List", "JustHtmlWidget"))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: addAntiForgeryToken
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors"
+                            },
+                            error: function(e) {
+                                display_kendoui_grid_error(e);
+                                // Cancel the changes
+                                this.cancelChanges();
+                            },
+                            pageSize: @(Model.PageSize),
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        pageable: {
+                            refresh: true,
+                            pageSizes: [@(Model.AvailablePageSizes)],
+                            @await Html.PartialAsync("_GridPagerMessages")
+                        },
+                        editable: {
+                            confirmation: "@T("Admin.Common.DeleteConfirmation")",
+                            mode: "inline"
+                        },
+                        scrollable: false,
+                        columns: [{
+                            field: "WidgetZone",
+                            title: "@T("Admin.JustHtml.Widgets.Fields.WidgetZone")",
+                            width: 300
+                        }, {
+                            field: "Content",
+                            title: "@T("Admin.JustHtml.Widgets.Fields.Content")",
+                            width: 200
+                        },{
+                            field: "IsActive",
+                            title: "@T("Admin.JustHtml.Widgets.Fields.IsActive")",
+                            width: 100,
+                            headerAttributes: { style: "text-align:center" },
+                            attributes: { style: "text-align:center" },
+                            template: '# if(IsActive) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                        }, {
+                                field: "Order",
+                            title: "@T("Admin.JustHtml.Widgets.Fields.Order")",
+                            width: 100
+                        }, {
+                            field: "Id",
+                            title: "@T("Admin.Common.Edit")",
+                            width: 80,
+                            headerAttributes: { style: "text-align:center" },
+                            attributes: { style: "text-align:center" },
+                            template: '<a class="btn btn-default" href="@Url.Content("~/Admin/JustHtmlWidget/ConfigureItem/")#=Id#"><i class="fa fa-pencil"></i>@T("Admin.Common.Edit")</a>'
+                        }]
+                    });
+                });
+        </script>
+    </div>
+    <div class="panel-footer">
+        <a class="btn btn-primary" href="@Url.Action("ConfigureItem", "JustHtmlWidget")">
+            <i class="fa fa-plus-square"></i>
+            @T("Admin.Common.AddNew")
+        </a>
+    </div>
+</div>
