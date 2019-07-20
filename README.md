@@ -5,7 +5,7 @@ JustHtml allows you to place your HTML code in any widget area.
 
 Instructions:
 
-1. Download pre-build version from https://sotait.net/en/justhtml and install
+1. Download pre-build version from https://www.nopcommerce.com/p/3392/just-html.aspx and install it
 
 2. Enable widget
 
