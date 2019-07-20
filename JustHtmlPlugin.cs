@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Nop.Core;
-using Nop.Core.Plugins;
 using Nop.Plugin.Widgets.JustHtml.Components;
 using Nop.Plugin.Widgets.JustHtml.Data;
 using Nop.Plugin.Widgets.JustHtml.Services;
 using Nop.Services.Cms;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
+using Nop.Services.Plugins;
 
 namespace Nop.Plugin.Widgets.JustHtml
 {
@@ -35,6 +35,8 @@ namespace Nop.Plugin.Widgets.JustHtml
 
             _storeScope = storeContext.ActiveStoreScopeConfiguration;
         }
+
+        public bool HideInWidgetList => false;
 
         public IList<string> GetWidgetZones()
         {

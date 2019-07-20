@@ -10,6 +10,7 @@ using Nop.Plugin.Widgets.JustHtml.Models;
 using Nop.Plugin.Widgets.JustHtml.Services;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
+using Nop.Services.Messages;
 using Nop.Services.Security;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
@@ -26,6 +27,7 @@ namespace Nop.Plugin.Widgets.JustHtml.Controllers
         #region Fields
 
         private readonly ILocalizationService _localizationService;
+        private readonly INotificationService _notificationService;
         private readonly IPermissionService _permissionService;
         private readonly IJustHtmlWidgetService _widgetService;
         private readonly ISettingService _settingService;
@@ -38,11 +40,13 @@ namespace Nop.Plugin.Widgets.JustHtml.Controllers
         #region Ctor
 
         public JustHtmlWidgetController(IStoreContext storeContext,
+            INotificationService notificationService,
             ISettingService settingService,
             ILocalizationService localizationService,
             IPermissionService permissionService,
             IJustHtmlWidgetService widgetService)
         {
+            _notificationService = notificationService;
             _settingService = settingService;
             _localizationService = localizationService;
             _permissionService = permissionService;
@@ -107,7 +111,7 @@ namespace Nop.Plugin.Widgets.JustHtml.Controllers
             _settingService.SaveSettingOverridablePerStore(_settings, x => x.WidgetSeparator,
                 model.WidgetSeparator_OverrideForStore, _storeScope, false);
 
-            SuccessNotification(_localizationService.GetResource("Admin.Plugins.Saved"));
+            _notificationService.SuccessNotification(_localizationService.GetResource("Admin.Plugins.Saved"));
 
             return Configure();
         }

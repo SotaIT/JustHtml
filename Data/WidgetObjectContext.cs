@@ -22,6 +22,11 @@ namespace Nop.Plugin.Widgets.JustHtml.Data
             return Database.GenerateCreateScript();
         }
 
+        public IQueryable<TQuery> QueryFromSql<TQuery>(string sql, params object[] parameters) where TQuery : class
+        {
+            throw new NotImplementedException();
+        }
+
         public IQueryable<TQuery> QueryFromSql<TQuery>(string sql) where TQuery : class
         {
             return Query<TQuery>().FromSql(sql);
@@ -79,8 +84,11 @@ namespace Nop.Plugin.Widgets.JustHtml.Data
 
         private string CreateSqlWithParameters(string sql, params object[] parameters)
         {
+            if (parameters == null)
+                return sql;
+            
             //add parameters to sql
-            for (var i = 0; i <= (parameters?.Length ?? 0) - 1; i++)
+            for (var i = 0; i <= parameters.Length - 1; i++)
             {
                 if (!(parameters[i] is DbParameter parameter))
                     continue;
