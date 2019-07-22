@@ -174,8 +174,8 @@ namespace Nop.Plugin.Widgets.JustHtml.Controllers
             return View("~/Plugins/Widgets.JustHtml/Views/ConfigureItem.cshtml", model);
         }
 
-        [HttpPost]
-        public IActionResult ConfigureItem(WidgetModel model)
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        public IActionResult ConfigureItem(WidgetModel model, bool continueEditing)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageWidgets))
                 return AccessDeniedView();
@@ -201,11 +201,10 @@ namespace Nop.Plugin.Widgets.JustHtml.Controllers
                 _widgetService.UpdateWidget(widget);
             }
 
-            //todo: success message and add return to list
-            //SuccessNotification(_localizationService.GetResource("Admin.Plugins.Saved"));
-            //return ConfigureItem();
-
-            return RedirectToAction(nameof(Configure));
+            if (!continueEditing || model.Id == 0)
+                return RedirectToAction(nameof(Configure));
+                
+            return RedirectToAction(nameof(ConfigureItem), new { id = model.Id });            
         }
 
         public IActionResult Delete(int id)

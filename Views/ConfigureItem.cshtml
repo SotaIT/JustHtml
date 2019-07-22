@@ -60,14 +60,26 @@
                         &nbsp;
                     </div>
                     <div class="col-md-9">
-                        <input type="submit" name="save" class="btn bg-blue" value="@T("Admin.Common.Save")" />
-                        @if(Model.Id > 0)
+                        <button type="submit" name="save" class="btn bg-blue">
+                            <i class="fa fa-floppy-o"></i>
+                            @T("Admin.Common.Save")
+                        </button>
+                        <button type="submit" name="save-continue" class="btn bg-blue">
+                            <i class="fa fa-floppy-o"></i>
+                            @T("Admin.Common.SaveContinue")
+                        </button>
+
+                        @if (Model.Id > 0)
                         {
                             <span id="widget-delete" class="btn bg-red">
                                 <i class="fa fa-trash-o"></i>
                                 @T("Admin.Common.Delete")
                             </span>
                         }
+                        <a asp-action="Configure" class="btn bg-aqua">
+                            <i class="fa fa-arrow-circle-left"></i>
+                            @T("Admin.Common.Cancel")
+                        </a>
                     </div>
                 </div>
             </div>
@@ -76,5 +88,5 @@
 </form>
 @if (Model.Id > 0)
 {
-    <nop-delete-confirmation asp-model-id="@Model.Id" asp-button-id="widget-delete"/>
+    <nop-delete-confirmation asp-model-id="@Model.Id" asp-button-id="widget-delete" />
 }
